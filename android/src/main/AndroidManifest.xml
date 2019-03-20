@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="zaihui.com.getui">
+
+    <application>
+        <service
+            android:name=".DefaultPushService"
+            android:exported="true"
+            android:label="PushService"
+            android:process=":pushservice"></service>
+        <service android:name=".DefaultReceiverService"></service>
+    </application>
+</manifest>
