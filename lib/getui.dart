@@ -38,7 +38,7 @@ class Getui {
   Future<dynamic> _handler(MethodCall methodCall) {
     switch (methodCall.method) {
       case 'onReceiveMessageData':
-        _receivedMessageDataController.add(methodCall.arguments);
+        _receivedMessageDataController.add(ReceivedPushMessage.fromMap(methodCall.arguments));
         break;
       case 'onReceiveClientId':
         _receivedClientIDController.add(methodCall.arguments);
@@ -48,13 +48,10 @@ class Getui {
     return Future.value(true);
   }
 }
-
 class ReceivedPushMessage {
   final String appId;
   final String messageId;
   final String taskId;
-  final String packageName; // only for android platform
-  final String clientId; // only for android platform
   final String payload;
   final bool offLine; // only for ios platform
 
@@ -63,13 +60,11 @@ class ReceivedPushMessage {
         appId = map['appId'],
         messageId = map['messageId'],
         taskId = map['taskId'],
-        packageName = map['packageName'],
-        clientId = map['clientId'],
         payload = map['payload'],
         offLine = map['offLine'];
 
   @override
   String toString() {
-    return 'ReceivedPushMessage{appId: $appId, messageId: $messageId, taskId: $taskId, packageName: $packageName, clientId: $clientId, payload: $payload, offLine: $offLine}';
+    return 'ReceivedPushMessage{appId: $appId, messageId: $messageId, taskId: $taskId, payload: $payload, offLine: $offLine}';
   }
 }
