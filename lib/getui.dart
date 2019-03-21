@@ -36,8 +36,6 @@ class Getui {
       _receivedMessageDataController.stream;
 
   Future<dynamic> _handler(MethodCall methodCall) {
-    print('++++++ call:' + methodCall.method);
-
     switch (methodCall.method) {
       case 'onReceiveMessageData':
         _receivedMessageDataController.add(methodCall.arguments);

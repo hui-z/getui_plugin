@@ -14,6 +14,7 @@ class GetuiPlugin(
     @JvmStatic
     fun registerWith(registrar: Registrar) {
       val channel = MethodChannel(registrar.messenger(), "getui")
+      ReceiverHandler.methodChannel = channel
       channel.setMethodCallHandler(GetuiPlugin(registrar))
     }
   }
@@ -23,6 +24,7 @@ class GetuiPlugin(
       "register" -> {
         PushManager.getInstance().initialize(registrar.context(),DefaultPushService::class.java)
         PushManager.getInstance().registerPushIntentService(registrar.context(),DefaultReceiverService::class.java)
+        result.success("")
       }
       "clientID" -> {
         val clientID =
