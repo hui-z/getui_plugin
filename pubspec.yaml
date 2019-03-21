@@ -1,8 +1,8 @@
 name: getui
-description: A new Flutter plugin.
+description: A Flutter plugin that allow Flutter to communicate with GTSDK.
 version: 0.0.1
-author:
-homepage:
+author: Bai <equweiyu@hotmail.com>
+homepage: https://github.com/hui-z/getui_plugin
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

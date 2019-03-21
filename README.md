@@ -1,6 +1,7 @@
 # getui
 
-A new Flutter plugin.
+这是一个用于集成个推的插件
+
 
 ## Getting Started
 
