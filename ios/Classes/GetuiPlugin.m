@@ -21,6 +21,7 @@
     if ([method isEqualToString:@"register"]) {
         NSArray* arguments = (NSArray *)call.arguments;
         [GeTuiSdk startSdkWithAppId:arguments[0] appKey:arguments[1] appSecret:arguments[2] delegate:self];
+        [self registerRemoteNotification];
         result(@"");
     } else if ([method isEqualToString:@"clientID"]) {
         result(GeTuiSdk.clientId);
@@ -54,6 +55,16 @@
     [_channel invokeMethod:@"onReceiveClientId" arguments:clientId];
 }
 
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    return YES;
+}
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    [GeTuiSdk registerDeviceTokenData:deviceToken];
+    NSLog(@"\n>>>[DeviceToken(NSData)]: %@\n\n", deviceToken);
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    [_channel invokeMethod:@"onRegisterDeviceToken" arguments:token];
+}
 /** SDK收到透传消息回调 */
 - (void)GeTuiSdkDidReceivePayloadData:(NSData *)payloadData andTaskId:(NSString *)taskId andMsgId:(NSString *)msgId andOffLine:(BOOL)offLine fromGtAppId:(NSString *)appId {
     // [ GTSdk ]：汇报个推自定义事件(反馈透传消息)
