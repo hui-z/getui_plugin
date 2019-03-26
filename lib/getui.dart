@@ -38,7 +38,8 @@ class Getui {
   Future<dynamic> _handler(MethodCall methodCall) {
     switch (methodCall.method) {
       case 'onReceiveMessageData':
-        _receivedMessageDataController.add(ReceivedPushMessage.fromMap(methodCall.arguments));
+        _receivedMessageDataController
+            .add(ReceivedPushMessage.fromMap(methodCall.arguments));
         break;
       case 'onReceiveClientId':
         _receivedClientIDController.add(methodCall.arguments);
@@ -48,6 +49,7 @@ class Getui {
     return Future.value(true);
   }
 }
+
 class ReceivedPushMessage {
   final String appId;
   final String messageId;

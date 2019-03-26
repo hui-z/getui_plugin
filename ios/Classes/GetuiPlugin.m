@@ -1,7 +1,7 @@
 #import "GetuiPlugin.h"
 #import <GTSDK/GeTuiSdk.h>
 #import <PushKit/PushKit.h>
-
+#import <UserNotifications/UserNotifications.h>
 
 @interface GetuiPlugin()<GeTuiSdkDelegate,UNUserNotificationCenterDelegate>
 
@@ -28,6 +28,17 @@
     } else {
         result(FlutterMethodNotImplemented);
     }
+}
+- (void)applicationDidBecomeActive:(UIApplication *)application{
+    [GeTuiSdk resetBadge];
+    UIApplication.sharedApplication.applicationIconBadgeNumber = 0;
+}
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
+    completionHandler(UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert);
+}
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler{
+    [GeTuiSdk handleRemoteNotification:response.notification.request.content.userInfo];
+    completionHandler();
 }
 
 /** 注册 APNs */
@@ -76,12 +87,12 @@
         payloadMsg = [[NSString alloc] initWithBytes:payloadData.bytes length:payloadData.length encoding:NSUTF8StringEncoding];
     }
     NSDictionary *received = @{
-        @"appId": appId,
-        @"taskId": taskId,
-        @"messageId": msgId,
-        @"offLine": [NSNumber numberWithBool:offLine] ,
-        @"payload": payloadMsg
-    };
+                               @"appId": appId,
+                               @"taskId": taskId,
+                               @"messageId": msgId,
+                               @"offLine": [NSNumber numberWithBool:offLine] ,
+                               @"payload": payloadMsg
+                               };
     
     [_channel invokeMethod:@"onReceiveMessageData" arguments:received];
     NSLog(@"%@",payloadMsg);

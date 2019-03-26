@@ -5,13 +5,16 @@ import io.flutter.plugin.common.MethodChannel
 object ReceiverHandler {
     var methodChannel: MethodChannel? = null
     fun handleReceivedMessageData(msg: GTTransmitMessage) {
-        val payload = hashMapOf(
+        val result = hashMapOf(
                 "appId" to msg.appid,
                 "taskId" to msg.taskId,
-                "messageId" to msg.messageId,
-                "payload" to msg.payload
+                "messageId" to msg.messageId
         )
-        methodChannel?.invokeMethod("onReceiveMessageData", payload)
+        val payload = msg.payload
+        if (payload != null) {
+            result["payload"] = String(payload)
+        }
+        methodChannel?.invokeMethod("onReceiveMessageData", result)
     }
     fun onReceiveClientId(clientID: String) {
         methodChannel?.invokeMethod("onReceiveClientId", clientID)
