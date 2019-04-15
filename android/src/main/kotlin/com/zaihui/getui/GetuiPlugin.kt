@@ -1,4 +1,4 @@
-package zaihui.com.getui
+package com.zaihui.getui
 
 import com.igexin.sdk.PushManager
 import io.flutter.plugin.common.MethodCall

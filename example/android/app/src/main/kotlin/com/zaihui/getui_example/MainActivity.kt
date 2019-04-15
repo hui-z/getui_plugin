@@ -1,4 +1,4 @@
-package zaihui.com.getui_example
+package com.zaihui.getui_example
 
 import android.os.Bundle
 

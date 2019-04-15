@@ -1,4 +1,4 @@
-package zaihui.com.getui
+package com.zaihui.getui
 
 import android.app.Service
 import android.content.Intent

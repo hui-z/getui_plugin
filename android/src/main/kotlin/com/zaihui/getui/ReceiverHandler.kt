@@ -1,4 +1,4 @@
-package zaihui.com.getui
+package com.zaihui.getui
 
 import com.igexin.sdk.message.GTTransmitMessage
 import io.flutter.plugin.common.MethodChannel
