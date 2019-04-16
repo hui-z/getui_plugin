@@ -34,6 +34,8 @@
         [GeTuiSdk bindAlias:call.arguments[0] andSequenceNum:call.arguments[1]];
     } else if ([method isEqualToString:@"unBindAlias"]){
         [GeTuiSdk unbindAlias:call.arguments[0] andSequenceNum:call.arguments[1] andIsSelf:call.arguments[2]];
+    } else if ([method isEqualToString:@"clearAllNotificationForNotificationBar"]) {
+        [GeTuiSdk clearAllNotificationForNotificationBar];
     } else {
         result(FlutterMethodNotImplemented);
     }

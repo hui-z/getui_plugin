@@ -43,7 +43,10 @@ class Getui {
   static Future unbindAlias(String alias, String aSn, bool isSelf) async {
     return await _channel.invokeMethod("unbindAlias", [alias, aSn, isSelf]);
   }
-
+  /// iOS 清空下拉通知栏全部通知,并将角标置 0，即不显示角标。
+  static Future clearAllNotificationForNotificationBar() async {
+    return await _channel.invokeMethod("clearAllNotificationForNotificationBar");
+  }
   ///  SDK登入成功返回clientId
   Stream<String> get receivedClientID => _receivedClientIDController.stream;
 
