@@ -30,6 +30,10 @@
         [self setBadge:value];
     } else if ([method isEqualToString:@"setTags"]) {
         [self setTags:(NSArray *)call.arguments];
+    } else if ([method isEqualToString:@"bindAlias"]){
+        [GeTuiSdk bindAlias:call.arguments[0] andSequenceNum:call.arguments[1]];
+    } else if ([method isEqualToString:@"unBindAlias"]){
+        [GeTuiSdk unbindAlias:call.arguments[0] andSequenceNum:call.arguments[1] andIsSelf:call.arguments[2]];
     } else {
         result(FlutterMethodNotImplemented);
     }

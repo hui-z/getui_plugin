@@ -24,7 +24,7 @@ class Getui {
     return await _channel.invokeMethod("register", [appID, appKey, appSecret]);
   }
 
-  /// 设置角标
+  /// iOS 设置角标
   static Future setBadge({int value = 0}) async {
     return await _channel.invokeMethod("setBadge", value);
   }
@@ -32,6 +32,16 @@ class Getui {
   /// 设置标签
   static Future setTags(List<String> value) async {
     return await _channel.invokeMethod("setTags", value);
+  }
+
+  /// 绑定用户别名
+  static Future bindAlias(String alias, String aSn) async {
+    return await _channel.invokeMethod("bindAlias", [alias, aSn]);
+  }
+
+  /// 解绑用户名
+  static Future unbindAlias(String alias, String aSn, bool isSelf) async {
+    return await _channel.invokeMethod("unbindAlias", [alias, aSn, isSelf]);
   }
 
   ///  SDK登入成功返回clientId

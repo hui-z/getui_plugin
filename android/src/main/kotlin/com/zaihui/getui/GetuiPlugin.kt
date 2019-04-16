@@ -33,7 +33,19 @@ class GetuiPlugin(
         result.success(clientID)
       }
       "setTags" -> {
-        PushManager.getInstance().setTag(registrar.context(), call.arguments as Array<out Tag>, System.currentTimeMillis().toString())
+        if (call.arguments is Array<*>) {
+          PushManager.getInstance().setTag(registrar.context(), call.arguments as Array<out Tag>, System.currentTimeMillis().toString())
+        }
+      }
+      "bindAlias" -> {
+        if (call.arguments is Array<*>) {
+          PushManager.getInstance().bindAlias(registrar.context(), (call.arguments as Array<*>)[0].toString(), (call.arguments as Array<*>)[1].toString() )
+        }
+      }
+      "unbindAlias" -> {
+        if (call.arguments is Array<*>) {
+          PushManager.getInstance().unBindAlias(registrar.context(), (call.arguments as Array<*>)[0].toString(), (call.arguments as Array<*>)[2] as Boolean, (call.arguments as Array<*>)[1].toString())
+        }
       }
       else -> result.notImplemented()
     }
