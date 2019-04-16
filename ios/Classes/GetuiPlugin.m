@@ -28,6 +28,8 @@
     } else if ([method isEqualToString:@"setBadge"]) {
         NSInteger value = (NSInteger)call.arguments;
         [self setBadge:value];
+    } else if ([method isEqualToString:@"setTags"]) {
+        [self setTags:(NSArray *)call.arguments];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -36,6 +38,10 @@
     [GeTuiSdk setBadge:value];
     UIApplication.sharedApplication.applicationIconBadgeNumber = value;
 }
+- (void)setTags:(NSArray *)value{
+    [GeTuiSdk setTags:value];
+}
+
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
     completionHandler(UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert);
 }

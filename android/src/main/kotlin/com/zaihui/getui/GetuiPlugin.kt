@@ -1,6 +1,7 @@
 package com.zaihui.getui
 
 import com.igexin.sdk.PushManager
+import com.igexin.sdk.Tag
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -30,6 +31,9 @@ class GetuiPlugin(
         val clientID =
                 PushManager.getInstance().getClientid(registrar.context())
         result.success(clientID)
+      }
+      "setTags" -> {
+        PushManager.getInstance().setTag(registrar.context(), call.arguments as Array<out Tag>, System.currentTimeMillis().toString())
       }
       else -> result.notImplemented()
     }
