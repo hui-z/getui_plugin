@@ -23,17 +23,23 @@ class Getui {
       {String appID, String appKey, String appSecret}) async {
     return await _channel.invokeMethod("register", [appID, appKey, appSecret]);
   }
+  /// 设置角标
+  static Future setBadge({int value = 0}) async {
+    return await _channel.invokeMethod("setBadge", value);
+  }
+
+  ///  SDK登入成功返回clientId
+  Stream<String> get receivedClientID => _receivedClientIDController.stream;
+
+  /// SDK接收个推推送的透传消息
+  Stream<ReceivedPushMessage> get receivedMessageData =>
+      _receivedMessageDataController.stream;
 
   final StreamController<String> _receivedClientIDController =
       StreamController.broadcast();
 
-  Stream<String> get receivedClientID => _receivedClientIDController.stream;
-
   final StreamController<ReceivedPushMessage> _receivedMessageDataController =
       StreamController.broadcast();
-
-  Stream<ReceivedPushMessage> get receivedMessageData =>
-      _receivedMessageDataController.stream;
 
   Future<dynamic> _handler(MethodCall methodCall) {
     switch (methodCall.method) {

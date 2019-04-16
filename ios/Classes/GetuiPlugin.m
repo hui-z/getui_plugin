@@ -25,13 +25,16 @@
         result(@"");
     } else if ([method isEqualToString:@"clientID"]) {
         result(GeTuiSdk.clientId);
+    } else if ([method isEqualToString:@"setBadge"]) {
+        NSInteger value = (NSInteger)call.arguments;
+        [self setBadge:value];
     } else {
         result(FlutterMethodNotImplemented);
     }
 }
-- (void)applicationDidBecomeActive:(UIApplication *)application{
-    [GeTuiSdk resetBadge];
-    UIApplication.sharedApplication.applicationIconBadgeNumber = 0;
+- (void)setBadge:(NSInteger)value{
+    [GeTuiSdk setBadge:value];
+    UIApplication.sharedApplication.applicationIconBadgeNumber = value;
 }
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
     completionHandler(UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert);
