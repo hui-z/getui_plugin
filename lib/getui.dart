@@ -24,16 +24,41 @@ class Getui {
     return await _channel.invokeMethod("register", [appID, appKey, appSecret]);
   }
 
+  /// iOS 设置角标
+  static Future setBadge({int value = 0}) async {
+    return await _channel.invokeMethod("setBadge", value);
+  }
+
+  /// 设置标签
+  static Future setTags(List<String> value) async {
+    return await _channel.invokeMethod("setTags", value);
+  }
+
+  /// 绑定用户别名
+  static Future bindAlias(String alias, String aSn) async {
+    return await _channel.invokeMethod("bindAlias", [alias, aSn]);
+  }
+
+  /// 解绑用户名
+  static Future unbindAlias(String alias, String aSn, bool isSelf) async {
+    return await _channel.invokeMethod("unbindAlias", [alias, aSn, isSelf]);
+  }
+  /// iOS 清空下拉通知栏全部通知,并将角标置 0，即不显示角标。
+  static Future clearAllNotificationForNotificationBar() async {
+    return await _channel.invokeMethod("clearAllNotificationForNotificationBar");
+  }
+  ///  SDK登入成功返回clientId
+  Stream<String> get receivedClientID => _receivedClientIDController.stream;
+
+  /// SDK接收个推推送的透传消息
+  Stream<ReceivedPushMessage> get receivedMessageData =>
+      _receivedMessageDataController.stream;
+
   final StreamController<String> _receivedClientIDController =
       StreamController.broadcast();
 
-  Stream<String> get receivedClientID => _receivedClientIDController.stream;
-
   final StreamController<ReceivedPushMessage> _receivedMessageDataController =
       StreamController.broadcast();
-
-  Stream<ReceivedPushMessage> get receivedMessageData =>
-      _receivedMessageDataController.stream;
 
   Future<dynamic> _handler(MethodCall methodCall) {
     switch (methodCall.method) {

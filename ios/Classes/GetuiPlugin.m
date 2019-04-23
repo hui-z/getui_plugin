@@ -25,14 +25,29 @@
         result(@"");
     } else if ([method isEqualToString:@"clientID"]) {
         result(GeTuiSdk.clientId);
+    } else if ([method isEqualToString:@"setBadge"]) {
+        NSInteger value = (NSInteger)call.arguments;
+        [self setBadge:value];
+    } else if ([method isEqualToString:@"setTags"]) {
+        [self setTags:(NSArray *)call.arguments];
+    } else if ([method isEqualToString:@"bindAlias"]){
+        [GeTuiSdk bindAlias:call.arguments[0] andSequenceNum:call.arguments[1]];
+    } else if ([method isEqualToString:@"unBindAlias"]){
+        [GeTuiSdk unbindAlias:call.arguments[0] andSequenceNum:call.arguments[1] andIsSelf:call.arguments[2]];
+    } else if ([method isEqualToString:@"clearAllNotificationForNotificationBar"]) {
+        [GeTuiSdk clearAllNotificationForNotificationBar];
     } else {
         result(FlutterMethodNotImplemented);
     }
 }
-- (void)applicationDidBecomeActive:(UIApplication *)application{
-    [GeTuiSdk resetBadge];
-    UIApplication.sharedApplication.applicationIconBadgeNumber = 0;
+- (void)setBadge:(NSInteger)value{
+    [GeTuiSdk setBadge:value];
+    UIApplication.sharedApplication.applicationIconBadgeNumber = value;
 }
+- (void)setTags:(NSArray *)value{
+    [GeTuiSdk setTags:value];
+}
+
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
     completionHandler(UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert);
 }

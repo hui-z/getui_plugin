@@ -9,14 +9,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _clientID;
   @override
   void initState() {
     super.initState();
     Getui.register(appID: '', appKey: '', appSecret: '');
     Getui.singleton().receivedClientID.listen((clientID) {
       setState(() {
-        _clientID = clientID;
+        
       });
     });
   }
@@ -29,7 +28,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('ClientID:' + (_clientID ?? '')),
+          child: Text('ClientID:' + (Getui.clientID() ?? '')),
         ),
       ),
     );
